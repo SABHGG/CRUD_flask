@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Table from "../components/Table.astro";
+const res = await fetch("http://127.0.0.1:5000");
+const data = await res.json();
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Plataforma</th>
+        <th>Usuario</th>
+        <th>Acciones</th>
+      </tr>
+
+      {
+        data.map((item) => {
+          return <Table baul={item} />;
+        })
+      }
+    </table>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  table,th,td {
+	border: 1px solid white;
+	border-collapse: collapse;
+  }
+</style>

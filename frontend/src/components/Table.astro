@@ -1,0 +1,26 @@
+---
+// Define las props para recibir los datos
+const { baul } = Astro.props;
+---
+
+<tr>
+  <td>{baul.id}</td>
+  <td>{baul.plataforma}</td>
+  <td>{baul.usuario}</td>
+  <td>{baul.clave}</td>
+  <td>
+    <button type="button" class="">
+      <img src="public/edit.svg" height="30" width="30" />
+    </button>
+    <button type="button" class="btn btnwarning">
+      <img src="public/delete.svg" height="30" width="30" />
+    </button>
+  </td>
+</tr>
+<style>
+  tr,
+  td {
+    border: 1px solid white;
+    border-collapse: collapse;
+  }
+</style>

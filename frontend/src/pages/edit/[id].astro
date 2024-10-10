@@ -1,0 +1,21 @@
+---
+const { id } = Astro.params;
+const res = await fetch(`http://127.0.0.1:5000/baul/${id}`);
+const data = await res.json();
+console.log(data);
+const { usuario, plataforma, clave } = data;
+---
+
+<form action="" method="put">
+  <label for="name"> Nombre </label>
+  <input type="text" name="name" id="name" value={`${usuario}`} />
+  <label for="plataforma"> Plataforma </label>
+  <input type="text" name="Plataforma" id="plataforma" value={plataforma} />
+  <label for="clave">Clave</label>
+  <input type="text" name="clave" id="clave" value={clave} />
+  <button type="submit" id="enviar" onclick=enviar()>Guardar</button>
+</form>
+
+<script is:inline>
+    
+</script>

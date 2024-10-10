@@ -93,11 +93,10 @@ def create_baul():
     finally:
         session.close()
     
-@app.route('/baul', methods=['PUT'])
-def update_baul():
+@app.route('/baul/<int:id>', methods=['PUT'])
+def update_baul(id):
     session = Session(engine)
     data = request.json
-    id = data.get('id', None)
     plataforma = data.get('plataforma', '').strip()
     usuario = data.get('usuario', '').strip()
     contrasena = data.get('clave', '').strip()
@@ -108,10 +107,7 @@ def update_baul():
         return jsonify({'message': 'plataforma es requerida'}), 400
     if not usuario:
         return jsonify({'message': 'usuario es requerido'}), 400
-    
-    contrasena_encriptada = bcrypt.hashpw(contrasena.encode('utf-8'), bcrypt.gensalt())
-    contrasena_encriptada_str = contrasena_encriptada.decode('utf-8')
-    
+   
     stmt = select(Baul).where(Baul.id == id)
     baul = session.execute(stmt).scalar_one_or_none()
     
@@ -120,8 +116,12 @@ def update_baul():
     
     baul.plataforma = plataforma
     baul.usuario = usuario
-    baul.clave = contrasena_encriptada_str
     
+    if contrasena:
+        contrasena_encriptada = bcrypt.hashpw(contrasena.encode('utf-8'), bcrypt.gensalt())
+        contrasena_encriptada_str = contrasena_encriptada.decode('utf-8')
+        baul.clave = contrasena_encriptada_str
+
     try:
         session.commit()
         return jsonify({'message': 'Baul actualizado exitosamente'}), 200
@@ -132,12 +132,10 @@ def update_baul():
         session.close()
 
 
-@app.route('/baul', methods=['DELETE'])
-def delete_baul():
-
+@app.route('/baul/<int:id>', methods=['DELETE'])
+def delete_baul(id):
     session = Session(engine)
     data = request.json
-    id = data.get('id', None)
     
     stmt = select(Baul).where(Baul.id == id)
     baul = session.execute(stmt).scalar_one_or_none()

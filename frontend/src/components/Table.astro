@@ -9,9 +9,9 @@ const { baul } = Astro.props;
   <td>{baul.usuario}</td>
   <td>{baul.clave}</td>
   <td>
-    <button type="button" class="">
+    <a href={`/edit/${baul.id}`}>
       <img src="public/edit.svg" height="30" width="30" />
-    </button>
+    </>
     <button type="button" class="btn btnwarning">
       <img src="public/delete.svg" height="30" width="30" />
     </button>
@@ -23,4 +23,9 @@ const { baul } = Astro.props;
     border: 1px solid white;
     border-collapse: collapse;
   }
+
+  a {
+    background-color: white;
+  }
 </style>
+

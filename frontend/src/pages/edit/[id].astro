@@ -3,19 +3,62 @@ const { id } = Astro.params;
 const res = await fetch(`http://127.0.0.1:5000/baul/${id}`);
 const data = await res.json();
 console.log(data);
-const { usuario, plataforma, clave } = data;
+const { usuario, plataforma } = data;
 ---
 
-<form action="" method="put">
+<form id="form" method="POST">
   <label for="name"> Nombre </label>
-  <input type="text" name="name" id="name" value={`${usuario}`} />
+  <input type="text" name="name" id="name" value={usuario} />
   <label for="plataforma"> Plataforma </label>
-  <input type="text" name="Plataforma" id="plataforma" value={plataforma} />
+  <input type="text" name="plataforma" id="plataforma" value={plataforma} />
   <label for="clave">Clave</label>
-  <input type="text" name="clave" id="clave" value={clave} />
-  <button type="submit" id="enviar" onclick=enviar()>Guardar</button>
+  <input type="text" name="clave" id="clave" />
+  <button type="submit">Guardar</button>
 </form>
+<div id="contenido"></div>
 
 <script is:inline>
-    
+  const form = document.querySelector("#form");
+  const contenido = document.querySelector("#contenido");
+  const path = window.location.pathname;
+  const pathSegments = path.split("/");
+  const id = pathSegments[pathSegments.length - 1];
+  form.addEventListener("submit", onFormSubmit);
+
+  async function onFormSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(form);
+    const dataForm = {
+      usuario: data.get("name"),
+      plataforma: data.get("plataforma"),
+      clave: data.get("clave"),
+    };
+    console.log(dataForm);
+
+    try {
+      const res = await fetch(`http://127.0.0.1:5000/baul/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataForm),
+      });
+      const json = await res.json();
+      contenido.innerHTML = `${json.message}`;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 </script>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 500px;
+  }
+  button {
+    width: 20%;
+  }
+</style>

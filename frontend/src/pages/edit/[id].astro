@@ -1,21 +1,24 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 const { id } = Astro.params;
 const res = await fetch(`http://127.0.0.1:5000/baul/${id}`);
 const data = await res.json();
-console.log(data);
 const { usuario, plataforma } = data;
+
 ---
 
-<form id="form" method="POST">
-  <label for="name"> Nombre </label>
-  <input type="text" name="name" id="name" value={usuario} />
-  <label for="plataforma"> Plataforma </label>
-  <input type="text" name="plataforma" id="plataforma" value={plataforma} />
-  <label for="clave">Clave</label>
-  <input type="text" name="clave" id="clave" />
-  <button type="submit">Guardar</button>
-</form>
-<div id="contenido"></div>
+<Layout title="Editar usuario">
+  <form id="form" method="POST">
+    <label for="name"> Nombre </label>
+    <input type="text" name="name" id="name" value={usuario} />
+    <label for="plataforma"> Plataforma </label>
+    <input type="text" name="plataforma" id="plataforma" value={plataforma} />
+    <label for="clave">Clave</label>
+    <input type="text" name="clave" id="clave" />
+    <button type="submit">Guardar</button>
+  </form>
+  <div id="contenido"></div>
+</Layout>
 
 <script is:inline>
   const form = document.querySelector("#form");
@@ -33,7 +36,6 @@ const { usuario, plataforma } = data;
       plataforma: data.get("plataforma"),
       clave: data.get("clave"),
     };
-    console.log(dataForm);
 
     try {
       const res = await fetch(`http://127.0.0.1:5000/baul/${id}`, {
@@ -50,15 +52,3 @@ const { usuario, plataforma } = data;
     }
   }
 </script>
-
-<style>
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    max-width: 500px;
-  }
-  button {
-    width: 20%;
-  }
-</style>

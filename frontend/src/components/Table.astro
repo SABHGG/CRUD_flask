@@ -9,23 +9,19 @@ const { baul } = Astro.props;
   <td>{baul.usuario}</td>
   <td>{baul.clave}</td>
   <td>
-    <a href={`/edit/${baul.id}`}>
+    <button onclick="redirigir(this)" id={baul.id}>
       <img src="public/edit.svg" height="30" width="30" />
-    </>
+    </button>
     <button type="button" class="btn btnwarning">
       <img src="public/delete.svg" height="30" width="30" />
     </button>
   </td>
 </tr>
-<style>
-  tr,
-  td {
-    border: 1px solid white;
-    border-collapse: collapse;
+<script is:inline>
+  function redirigir(button) {
+    const id = button.id;
+    window.location.href = "/edit/" + id;
   }
+</script>
 
-  a {
-    background-color: white;
-  }
-</style>
 

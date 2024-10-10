@@ -12,7 +12,7 @@ const data = await res.json();
         <th>ID</th>
         <th>Plataforma</th>
         <th>Usuario</th>
-        <th>Acciones</th>
+        <th>Clave</th>
       </tr>
 
       {
@@ -23,19 +23,3 @@ const data = await res.json();
     </table>
   </main>
 </Layout>
-
-<style>
-  main {
-    margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    color: white;
-    font-size: 20px;
-    line-height: 1.6;
-  }
-  table,th,td {
-	border: 1px solid white;
-	border-collapse: collapse;
-  }
-</style>

@@ -19,7 +19,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const request = await fetch("http://127.0.0.1:5000");
+        const request = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`);
         const res = await request.json();
         setData(res);
       } catch (error) {
@@ -63,13 +63,14 @@ export default function Dashboard() {
                         label: "Eliminar",
                         onClick: async () => {
                           toast.promise(
-                            fetch(`http://127.0.0.1:5000/baul/${post.id}`, {
+                            fetch(`${process.env.NEXT_PUBLIC_API_URL}/baul/${post.id}`, {
                               method: "DELETE",
                             }),
                             {
                               loading: "Eliminando...",
                               success: async (res) => {
                                 const result = await res.json();
+                                setData(data.filter((item) => item.id !== post.id));
                                 return result.message;
                               },
                               error: "Error eliminando el item",

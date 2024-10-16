@@ -1,10 +1,12 @@
 "use client";
+
 import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { toast } from "sonner";
+
 
 export default function Edit() {
   const { id } = useParams();
@@ -21,7 +23,7 @@ export default function Edit() {
       // Solo hacer el fetch cuando `id` esté disponible
       const fetchData = async () => {
         try {
-          const res = await fetch(`http://127.0.0.1:5000/baul/${id}`);
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/baul/${id}`);
           const result = await res.json();
           setData({ usuario: result.usuario, plataforma: result.plataforma });
         } catch (error) {
@@ -40,7 +42,7 @@ export default function Edit() {
 
   const onSubmit = async (data) => {
     try {
-      const promise = fetch(`http://127.0.0.1:5000/baul/${id}`, {
+      const promise = fetch(`${process.env.NEXT_PUBLIC_API_URL}/baul/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

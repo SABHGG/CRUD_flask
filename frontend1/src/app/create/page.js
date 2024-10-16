@@ -13,7 +13,7 @@ export default function Create() {
 
   const onSubmit = async (data) => {
     try {
-      const promise = fetch(`http://127.0.0.1:5000/baul`, {
+      const promise = fetch(`${process.env.NEXT_PUBLIC_API_URL}/baul`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export default function Create() {
           const result = await res.json();
           return result.message;
         },
-        error: "Error actualizando los datos",
+        error: "Error en crear el registro",
       });
     } catch (error) {
       console.error("Error updating data:", error);

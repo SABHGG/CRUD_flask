@@ -13,10 +13,8 @@ import DeleteIcon from "@/app/components/icons/DeleteIcon";
 import { Button } from "@nextui-org/button";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
-  const router = useRouter();
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +22,7 @@ export default function Dashboard() {
         const request = await fetch("http://127.0.0.1:5000");
         const res = await request.json();
         setData(res);
-      } catch {
+      } catch (error) {
         console.error("Error fetching data:", error);
       }
     };

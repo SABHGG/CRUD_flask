@@ -50,7 +50,12 @@ export default function Create() {
           label="Plataforma"
           {...register("plataforma", { required: true })}
         />
-        <Input label="Contraseña" name="clave" {...register("clave", {})} />
+        <Input
+          isRequired
+          label="Contraseña"
+          name="clave"
+          {...register("clave", {})}
+        />
         <Button type="submit">Guardar</Button>
       </form>
     </>

@@ -1,5 +1,7 @@
 ---
-// Define las props para recibir los datos
+import RedirectButton from './RedirectButton.astro';
+import Delete from './icons/DeleteIcon.astro';
+import Edit from './icons/EditIcon.astro';
 const { baul } = Astro.props;
 ---
 
@@ -9,19 +11,12 @@ const { baul } = Astro.props;
   <td>{baul.usuario}</td>
   <td>{baul.clave}</td>
   <td>
-    <button onclick="redirigir(this)" id={baul.id}>
-      <img src="public/edit.svg" height="30" width="30" />
-    </button>
-    <button type="button" class="btn btnwarning">
-      <img src="public/delete.svg" height="30" width="30" />
-    </button>
+    <RedirectButton width="45" height="45" href={`/edit/${baul.id}`}>
+      <Edit  />
+    </RedirectButton>
+    <RedirectButton width="45" height="45" href={`/edit/${baul.id}`}>
+      <Delete  />
+    </RedirectButton>
   </td>
 </tr>
-<script is:inline>
-  function redirigir(button) {
-    const id = button.id;
-    window.location.href = "/edit/" + id;
-  }
-</script>
-
 

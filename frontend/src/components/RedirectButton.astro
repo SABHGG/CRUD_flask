@@ -1,0 +1,6 @@
+---
+const {width, height, href} = Astro.props
+---
+<a href={href} style={`width: ${width};height: ${height};`}>
+  <slot />
+</a>

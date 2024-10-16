@@ -135,23 +135,24 @@ def update_baul(id):
 @app.route('/baul/<int:id>', methods=['DELETE'])
 def delete_baul(id):
     session = Session(engine)
-    data = request.json
     
+    # Buscar el registro a eliminar
     stmt = select(Baul).where(Baul.id == id)
-    baul = session.execute(stmt).scalar_one_or_none()
-    
-    if not baul:
-        return jsonify({'message': 'Baul no encontrado'}), 404
-
-    session.delete(baul)
     try:
+        baul = session.execute(stmt).scalar_one_or_none()
+        
+        if not baul:
+            return jsonify({'message': 'Baul no encontrado'}), 404
+
+        # Eliminar el registro
+        session.delete(baul)
         session.commit()
-        return jsonify({'message': f'el baul con id {id} ha sido eliminado'}), 200
+        return jsonify({'message': f'El baul con id {id} ha sido eliminado'}), 200
     except Exception as e:
         session.rollback()
-        return jsonify({'message': 'Error en la solicitud'}), 400
+        return jsonify({'message': f'Error al eliminar el baul: {str(e)}'}), 400
     finally:
-        session.close()    
+        session.close()
 
 
 if __name__ == '__main__':
